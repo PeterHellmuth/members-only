@@ -21,9 +21,9 @@ function normalizePort(val) {
   return false;
 }
 
-const port = normalizePort(process.env.PORT || "3000"); //deployed
-const SERVER_URL = "https://members-only-ph.fly.dev"; //deployed
-//const SERVER_URL = "http://localhost:" + "3000"; //dev test
+//const port = normalizePort(process.env.PORT || "3000"); //deployed
+//const SERVER_URL = "https://members-only-ph.fly.dev"; //deployed
+const SERVER_URL = "http://localhost:" + "3000"; //dev test
 
 function App() {
   //const [response, setResponse] = useState("");
@@ -397,7 +397,7 @@ function App() {
               {user.admin ? null : (
                 <form method="POST" action="" className="admin-form">
                   <label htmlFor="secretcode">
-                    Admin Password (not telling you):{" "}
+                    Admin Password (no hint!):{" "}
                   </label>
                   <input
                     type="password"
