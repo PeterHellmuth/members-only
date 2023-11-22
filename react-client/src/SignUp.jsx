@@ -56,7 +56,7 @@ function SignUp({ addUser, errors, setCurrentPage }) {
           Cancel
         </button>
         <button type="submit" onClick={(e) => addUser(e)}>
-          Submit
+          Sign Up
         </button>
         <span className="error-message">
           {errors.submit ? errors.submit : ""}

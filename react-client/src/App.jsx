@@ -251,8 +251,8 @@ function App() {
     let data = null;
     fetchUrl = `${SERVER_URL}/users/login`;
     data = JSON.stringify({
-      username: e.target.parentNode.username.value,
-      password: e.target.parentNode.password.value,
+      username: e.target.parentNode.parentNode.username.value,
+      password: e.target.parentNode.parentNode.password.value,
     });
 
     fetch(fetchUrl, {
@@ -301,10 +301,10 @@ function App() {
     let data = null;
     fetchUrl = `${SERVER_URL}/users/`;
     data = JSON.stringify({
-      firstName: e.target.parentNode.firstName.value,
-      lastName: e.target.parentNode.lastName.value,
-      username: e.target.parentNode.username.value,
-      password: e.target.parentNode.password.value,
+      firstName: e.target.parentNode.parentNode.firstName.value,
+      lastName: e.target.parentNode.parentNode.lastName.value,
+      username: e.target.parentNode.parentNode.username.value,
+      password: e.target.parentNode.parentNode.password.value,
     });
 
     fetch(fetchUrl, {

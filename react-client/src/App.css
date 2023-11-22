@@ -47,6 +47,8 @@ button {
 .message-info {
   display: flex;
   font-size: 0.8em;
+  gap: 3px;
+  align-items: center;
 }
 .sign-in-buttons {
   display: flex;
