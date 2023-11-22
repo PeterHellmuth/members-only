@@ -21,9 +21,9 @@ function normalizePort(val) {
   return false;
 }
 
-//const port = normalizePort(process.env.PORT || "3000"); //deployed
-//const SERVER_URL = "https://members-only-ph.fly.dev"; //deployed
-const SERVER_URL = "http://localhost:" + "3000"; //dev test
+const port = normalizePort(process.env.PORT || "3000"); //deployed
+const SERVER_URL = "https://members-only-ph.fly.dev"; //deployed
+//const SERVER_URL = "http://localhost:" + "3000"; //dev test
 
 function App() {
   //const [response, setResponse] = useState("");
@@ -352,7 +352,7 @@ function App() {
 
   if (currentPage === "login") {
     return (
-      <>
+      <div className="main-container">
         <h1>Members Only Club</h1>
         {user.auth ? (
           <div className="user-panel">
@@ -422,10 +422,11 @@ function App() {
           </div>
         ) : (
           <div className="login-container">
-            <Login loginUser={loginUser} errors={errors} />
-            <button type="button" onClick={() => setCurrentPage("signup")}>
-              Create Account
-            </button>
+            <Login
+              loginUser={loginUser}
+              errors={errors}
+              setCurrentPage={setCurrentPage}
+            />
           </div>
         )}
         <div className="message-container">
@@ -445,10 +446,19 @@ function App() {
               })
             : null}
         </div>
-      </>
+      </div>
     );
   } else if (currentPage === "signup") {
-    return <SignUp addUser={addUser} errors={errors} />;
+    return (
+      <div className="main-container">
+        <h1>Members Only Club</h1>
+        <SignUp
+          addUser={addUser}
+          errors={errors}
+          setCurrentPage={setCurrentPage}
+        />
+      </div>
+    );
   }
 }
 

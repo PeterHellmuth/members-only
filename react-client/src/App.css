@@ -10,6 +10,7 @@ p {
 .sign-up-form {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 10px;
 }
 
@@ -35,6 +36,11 @@ button {
   color: grey;
 }
 
+.main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .message-text {
   color: black;
 }
@@ -42,10 +48,12 @@ button {
   display: flex;
   font-size: 0.8em;
 }
-
+.sign-in-buttons {
+  display: flex;
+  gap: 10px;
+}
 .login-container {
   display: flex;
-  flex-direction: column;
   align-items: center;
 }
 .login-form {
