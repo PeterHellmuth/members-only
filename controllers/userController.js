@@ -44,12 +44,16 @@ exports.user_login_post = [
       if (matchingPassword.length === 1) {
         const token = await getToken({
           username: matchingPassword[0].username,
+          member: matchingPassword[0].member,
+          admin: matchingPassword[0].admin,
         });
 
         if (token) {
           return res.json({
             token: token,
             username: matchingPassword[0].username,
+            member: matchingPassword[0].member,
+            admin: matchingPassword[0].admin,
           });
         }
         return res.status(401).send();
@@ -74,6 +78,125 @@ const getToken = (payload) =>
     );
   });
 
+exports.allowAnonymous = (req, res, next) => {
+  res.locals.allowAnonymous = true;
+  next();
+};
+
+exports.user_member_put = [
+  body("secretcode")
+    .trim()
+    .escape()
+    .isLength({ min: 1 })
+    .withMessage("Secret Code must be specified."),
+  asyncHandler(async (req, res, next) => {
+    // Extract the validation errors from a request.
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      // There are errors. Render form again with sanitized values/errors messages.
+      res.status(400).send(errors.array());
+    } else {
+      // Data from form is valid.
+
+      //check if username exists.
+      const existingUsername = await User.findOne({
+        username: { $eq: req.user.username },
+      });
+
+      if (existingUsername) {
+        //check secret code
+        if (req.body.secretcode == process.env.SECRET_CLUB_CODE) {
+          const result = await User.findByIdAndUpdate(
+            existingUsername._id.toString(),
+            {
+              member: true,
+            }
+          );
+          const token = await getToken({
+            username: result.username,
+            member: true,
+            admin: result.admin,
+          });
+
+          if (token) {
+            return res.status(200).json({
+              token: token,
+              username: result.username,
+              member: true,
+              admin: result.admin,
+            });
+          } else {
+            res.status(500).send();
+          }
+        } else {
+          res.status(400).send();
+        }
+      } else {
+        res.status(400).send();
+      }
+    }
+  }),
+];
+
+exports.user_admin_put = [
+  body("secretcode")
+    .trim()
+    .escape()
+    .isLength({ min: 1 })
+    .withMessage("Admin Code must be specified."),
+  asyncHandler(async (req, res, next) => {
+    // Extract the validation errors from a request.
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      // There are errors. Render form again with sanitized values/errors messages.
+
+      res.status(400).send(errors.array());
+    } else {
+      // Data from form is valid.
+
+      //check if username exists.
+      const existingUsername = await User.findOne({
+        username: { $eq: req.user.username },
+      });
+
+      if (existingUsername) {
+        //check secret code
+        if (req.body.secretcode == process.env.SECRET_ADMIN_CODE) {
+          const result = await User.findByIdAndUpdate(
+            existingUsername._id.toString(),
+            {
+              admin: true,
+              member: true,
+            }
+          );
+          const token = await getToken({
+            username: result.username,
+            member: true,
+            admin: true,
+          });
+
+          if (token) {
+            return res.status(200).json({
+              token: token,
+              username: result.username,
+              member: true,
+              admin: true,
+            });
+          } else {
+            res.status(500).send();
+          }
+        } else {
+          res.status(403).send();
+        }
+      } else {
+        res.status(403).send();
+      }
+    }
+  }),
+];
+
 exports.verifyToken = (req, res, next) => {
   req.user = { username: null, verified: false };
   const { JWT_SECRET_KEY } = process.env;
@@ -82,17 +205,32 @@ exports.verifyToken = (req, res, next) => {
     const bearerToken = bearerHeader.split(" ")[1];
     jwt.verify(bearerToken, JWT_SECRET_KEY, function (err, data) {
       if (!(err && typeof data === "undefined")) {
-        req.user = { username: data.username, verified: true };
+        req.user = {
+          username: data.username,
+          member: data.member,
+          admin: data.admin,
+          verified: true,
+        };
         next();
       }
     });
   }
 
-  return res.status(403).send();
+  if (req.user.verified === false) {
+    if (res.locals.allowAnonymous) {
+      next();
+    } else {
+      return res.status(403).send();
+    }
+  }
 };
 
 exports.user_authenticate_get = (req, res) => {
-  return res.status(200).json({ username: req.user.username });
+  return res.status(200).json({
+    username: req.user.username,
+    member: req.user.member,
+    admin: req.user.admin,
+  });
 };
 
 exports.user_logout_post = (req, res) => {
@@ -119,8 +257,11 @@ exports.user_create_post = [
   body("username")
     .trim()
     .escape()
+    .toLowerCase()
     .isLength({ min: 1 })
-    .withMessage("Username must be specified."),
+    .withMessage("Username must be specified.")
+    .isAlphanumeric()
+    .withMessage("Username can only contains letters or numbers."),
   body("password")
     .trim()
     .escape()

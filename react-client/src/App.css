@@ -14,3 +14,67 @@
   font-size: 12px;
   color: red;
 }
+
+button {
+  max-width: 150px;
+}
+.message {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: white;
+  border-radius: 10px;
+  align-items: start;
+  padding: 10px;
+  text-align: left;
+  max-width: 500px;
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.login-form {
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+  align-items: center;
+  gap: 5px;
+}
+.message-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: lightblue;
+  padding: 30px;
+  border-radius: 10px;
+  border-style: solid;
+}
+
+.user-forms {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+.club-form {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  align-items: center;
+}
+
+.admin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  align-items: center;
+}
+.user-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}

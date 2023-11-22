@@ -51,7 +51,7 @@ function SignUp({ addUser, errors }) {
       <span className="error-message">
         {errors.password ? errors.password : ""}
       </span>
-      <button className="item-button" type="submit" onClick={(e) => addUser(e)}>
+      <button type="submit" onClick={(e) => addUser(e)}>
         Submit
       </button>
       <span className="error-message">

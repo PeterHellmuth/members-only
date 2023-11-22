@@ -9,6 +9,8 @@ const UserSchema = new Schema({
   lastName: { type: String, required: true },
   username: { type: String, required: true },
   password: { type: String, required: true },
+  member: { type: Boolean, required: false, default: false },
+  admin: { type: Boolean, required: false, default: false },
 });
 
 // Virtual for book's URL
