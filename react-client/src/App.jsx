@@ -425,6 +425,7 @@ function App() {
             <Login
               loginUser={loginUser}
               errors={errors}
+              setErrors={setErrors}
               setCurrentPage={setCurrentPage}
             />
           </div>
@@ -455,6 +456,7 @@ function App() {
         <SignUp
           addUser={addUser}
           errors={errors}
+          setErrors={setErrors}
           setCurrentPage={setCurrentPage}
         />
       </div>

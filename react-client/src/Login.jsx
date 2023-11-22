@@ -1,6 +1,6 @@
 import React from "react";
 
-function Login({ loginUser, errors, setCurrentPage }) {
+function Login({ loginUser, errors, setCurrentPage, setErrors }) {
   return (
     <form method="POST" action="" className="login-form">
       <label htmlFor="username">Username: </label>
@@ -38,7 +38,13 @@ function Login({ loginUser, errors, setCurrentPage }) {
         <span className="error-message">
           {errors.submit ? errors.submit : ""}
         </span>
-        <button type="button" onClick={() => setCurrentPage("signup")}>
+        <button
+          type="button"
+          onClick={() => {
+            setCurrentPage("signup");
+            setErrors([]);
+          }}
+        >
           Sign Up
         </button>
       </div>
