@@ -36,7 +36,14 @@ const messageRouter = require("./routes/messages");
 const app = express();
 // Apply rate limiter to all requests
 app.use(limiter);
-app.use(helmet());
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      "script-src": ["'self'", "code.jquery.com", "cdn.jsdelivr.net"],
+      "connect-src": ["'self'", "http://members-only-tiz3.onrender.com/"],
+    },
+  })
+);
 
 app.use(logger("dev"));
 app.use(express.json());
