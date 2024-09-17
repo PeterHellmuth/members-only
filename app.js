@@ -40,7 +40,7 @@ app.use(
   helmet.contentSecurityPolicy({
     directives: {
       "script-src": ["'self'", "code.jquery.com", "cdn.jsdelivr.net"],
-      "connect-src": ["'self'", "http://members-only-tiz3.onrender.com/"],
+      "connect-src": ["'self'", "http://members-only-jjl3.onrender.com/"],
     },
   })
 );

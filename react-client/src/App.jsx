@@ -22,7 +22,7 @@ function normalizePort(val) {
 }
 
 const port = normalizePort(process.env.PORT || "3000"); //deployed
-const SERVER_URL = "https://members-only-tiz3.onrender.com"; //deployed
+const SERVER_URL = "https://members-only-jjl3.onrender.com"; //deployed
 //const SERVER_URL = "http://localhost:" + "3000"; //dev test
 
 function App() {
